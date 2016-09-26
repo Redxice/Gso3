@@ -37,11 +37,11 @@ public class Time implements ITime {
         if (h < 0 || h > 23) {
             throw new IllegalArgumentException("hours must be within 0..23");
         }
-        if (m < 0 || m > 59) {
+        if (min < 0 || min > 59) {
             throw new IllegalArgumentException("minutes must be within 0..59");
         }
         
-        gc = new GregorianCalendar(y, m , d, h, min);
+        gc = new GregorianCalendar(y, m-1 , d, h, min);
     }
 
     Time(Time t) {
@@ -78,7 +78,7 @@ public class Time implements ITime {
 
     @Override
     public int getMonth() {
-        return gc.get(GregorianCalendar.MONTH) + 1;
+        return gc.get(GregorianCalendar.MONTH)+1;
     }
 
     @Override
@@ -112,6 +112,6 @@ public class Time implements ITime {
     @Override
     public int difference(ITime time) {
         Time t = (Time) time;
-        return (int) ((this.gc.getTimeInMillis() - t.gc.getTimeInMillis()) / 600000);
+        return (int) ((this.gc.getTimeInMillis() - t.gc.getTimeInMillis()) / 60000);
     }
 }
