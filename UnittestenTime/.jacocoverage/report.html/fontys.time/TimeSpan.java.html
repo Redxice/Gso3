@@ -94,24 +94,24 @@ public class TimeSpan implements ITimeSpan {
 
     @Override
     public ITimeSpan unionWith(ITimeSpan timeSpan) {
-<span class="pc bpc" id="L97" title="2 of 4 branches missed.">        if (bt.compareTo(timeSpan.getEndTime()) &lt; 0 || et.compareTo(timeSpan.getBeginTime()) &gt; 0) {</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">        if (bt.compareTo(timeSpan.getEndTime()) &lt; 0 || et.compareTo(timeSpan.getBeginTime()) &gt; 0) {</span>
 <span class="fc" id="L98">            return null;</span>
         }
       
         ITime begintime, endtime;
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (bt.compareTo(timeSpan.getBeginTime()) &lt; 0) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (bt.compareTo(timeSpan.getBeginTime()) &lt; 0) {</span>
 <span class="nc" id="L103">            begintime = bt;</span>
         } else {
-<span class="nc" id="L105">            begintime = timeSpan.getBeginTime();</span>
+<span class="fc" id="L105">            begintime = timeSpan.getBeginTime();</span>
         }
 
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (et.compareTo(timeSpan.getEndTime()) &gt; 0) {</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (et.compareTo(timeSpan.getEndTime()) &gt; 0) {</span>
 <span class="nc" id="L109">            endtime = et;</span>
         } else {
-<span class="nc" id="L111">            endtime = timeSpan.getEndTime();</span>
+<span class="fc" id="L111">            endtime = timeSpan.getEndTime();</span>
         }
 
-<span class="nc" id="L114">        return new TimeSpan(begintime, endtime);</span>
+<span class="fc" id="L114">        return new TimeSpan(begintime, endtime);</span>
         
     }
 
