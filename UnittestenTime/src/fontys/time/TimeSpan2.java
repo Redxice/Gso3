@@ -27,6 +27,7 @@ public class TimeSpan2 implements ITimeSpan{
 
         this.bt = bt;
         duration = et.difference(bt);
+        
     }
 
     @Override
@@ -36,8 +37,8 @@ public class TimeSpan2 implements ITimeSpan{
 
     @Override
     public ITime getEndTime() {
-        Time t = new Time((Time)bt);
-        t.plus((int)duration);
+        ITime t = new Time((Time)bt);
+        t=t.plus((int)duration);
         return t;
     }
 
@@ -112,24 +113,21 @@ public class TimeSpan2 implements ITimeSpan{
     }
 
     @Override
-    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
+    public ITimeSpan intersectionWith(ITimeSpan timeSpan2) {
         ITime et = new Time((Time)bt.plus((int)duration));
        ITime begintime, endtime;
-        if (bt.compareTo(timeSpan.getBeginTime()) > 0) {
+        if (bt.compareTo(timeSpan2.getBeginTime()) > 0) {
             begintime = bt;
         } else {
-            begintime = timeSpan.getBeginTime();
+            begintime = timeSpan2.getBeginTime();
         }
 
-        if (et.compareTo(timeSpan.getEndTime()) < 0) {
+        if (et.compareTo(timeSpan2.getEndTime()) < 0) {
             endtime = et;
         } else {
-            endtime = timeSpan.getEndTime();
+            endtime = timeSpan2.getEndTime();
         }
 
-        if (begintime.compareTo(endtime) >= 0) {
-            return null;
-        }
 
         return new TimeSpan(begintime, endtime);
     }

@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Melvin
+ * @author redxice
  */
-public class TimeSpanTest {
+public class TimeSpan2Test {
     
-    public TimeSpanTest() {
+    public TimeSpan2Test() {
     }
     
     @BeforeClass
@@ -36,16 +36,13 @@ public class TimeSpanTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of getBeginTime method, of class TimeSpan.
-     */
+ 
     @Test
     public void testAllExceptions(){
         try{
         Time end = new Time(2016,9,19,15,40);
         Time begin = new Time(2016,9,19,16,40);
-        TimeSpan timespan = new TimeSpan(begin,end);
+        TimeSpan2 timespan = new TimeSpan2(begin,end);
         fail("Constructor failed");
         }
         catch(IllegalArgumentException ex) {   
@@ -53,7 +50,7 @@ public class TimeSpanTest {
         try{
         Time Begin = new Time(2016,9,19,15,40);
         Time End = new Time(2016,9,19,16,40);
-        TimeSpan instance = new TimeSpan(Begin,End); 
+        TimeSpan2 instance = new TimeSpan2(Begin,End); 
         instance.setBeginTime(new Time(2016,9,20,16,40));
         fail("setBegin ex failed");
         }
@@ -62,7 +59,7 @@ public class TimeSpanTest {
         try{
         Time Begin = new Time(2016,9,19,15,40);
         Time End = new Time(2016,9,19,16,40);
-        TimeSpan instance = new TimeSpan(Begin,End); 
+        TimeSpan2 instance = new TimeSpan2(Begin,End); 
         instance.setEndTime(new Time(2016,9,18,16,40));
         fail("setEnd failed");
         }
@@ -72,7 +69,7 @@ public class TimeSpanTest {
         try{
         Time Begin = new Time(2016,9,19,15,40);
         Time End = new Time(2016,9,19,16,40);
-        TimeSpan instance = new TimeSpan(Begin,End); 
+        TimeSpan2 instance = new TimeSpan2(Begin,End); 
         instance.changeLengthWith(-6);
         fail("cahangeLengthWith failed");
         }
@@ -85,7 +82,7 @@ public class TimeSpanTest {
         System.out.println("getBeginTime");
         Time Begin = new Time(2016,9,19,15,40);
         Time End = new Time(2016,9,19,16,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         ITime expResult = Begin;
         ITime result = instance.getBeginTime();
         assertEquals(expResult, result);
@@ -101,16 +98,15 @@ public class TimeSpanTest {
         System.out.println("getEndTime");
         ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,16,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         ITime expResult = End;
         ITime result = instance.getEndTime();
         if (expResult.compareTo(result)==0) {
             
         }
         else{
-            fail("EndTime is niet gelijk");
+            fail("EndTimes is niet correct");
         }
-     
  
     }
 
@@ -122,7 +118,7 @@ public class TimeSpanTest {
         System.out.println("length");
         Time Begin = new Time(2016,9,19,15,40);
         Time End = new Time(2016,9,19,16,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         int expResult = End.difference(Begin);
         int result = instance.length();
         assertEquals(expResult, result);
@@ -138,7 +134,7 @@ public class TimeSpanTest {
         Time Begin = new Time(2016,9,19,15,40);
         Time End = new Time(2016,9,19,16,40);
         Time beginTime = new Time(2016,9,19,14,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         instance.setBeginTime(beginTime);
         assertEquals(beginTime, instance.getBeginTime());
 
@@ -152,10 +148,16 @@ public class TimeSpanTest {
         System.out.println("setEndTime");
         ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,16,40);
-        ITime endTime = new Time(2016,9,19,18,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        ITime endTime = new Time(2016,9,20,18,40);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         instance.setEndTime(endTime);
-       assertEquals(endTime, instance.getEndTime());
+      
+        if (instance.getEndTime().compareTo(endTime)==0) {
+            
+        }
+        else{
+            fail("testSetEndTime failed");
+        }
     }
 
     /**
@@ -167,7 +169,7 @@ public class TimeSpanTest {
         int minutes = 1;
         ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,18,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         instance.move(minutes);
         ITime exptBegin = new Time(2016,9,19,15,41);
         assertEquals(exptBegin.getMinutes(), instance.getBeginTime().getMinutes());
@@ -181,7 +183,7 @@ public class TimeSpanTest {
         System.out.println("changeLengthWith");
         ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,18,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         int minutes = 1;
         instance.changeLengthWith(minutes);
         assertEquals( 41,instance.getEndTime().getMinutes());
@@ -196,47 +198,47 @@ public class TimeSpanTest {
         //test 1
         ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,18,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         ITime IBegin = new Time(2016,9,19,16,40);
         ITime IEnd = new Time(2016,9,19,17,40);
-        ITimeSpan timeSpan = new TimeSpan(IBegin,IEnd);;
+        TimeSpan2 timeSpan = new TimeSpan2(IBegin,IEnd);;
         boolean expResult = true;
         boolean result = instance.isPartOf(timeSpan);
         assertEquals(expResult, result);
         //test 2
          Begin = new Time(2016,9,18,15,40);
          End = new Time(2016,9,19,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,18,15,40);
          IEnd = new Time(2016,9,19,18,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);;
+         timeSpan = new TimeSpan2(IBegin,IEnd);;
          expResult = true;
          result = instance.isPartOf(timeSpan);
          assertEquals(expResult, result);
          //test3
          Begin = new Time(2016,9,18,15,40);
          End = new Time(2016,9,19,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
         IBegin = new Time(2016,9,18,15,40);
          IEnd = new Time(2016,9,20,18,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);;
+         timeSpan = new TimeSpan2(IBegin,IEnd);;
          expResult = false;
          result = instance.isPartOf(timeSpan);
          assertEquals(expResult, result);
          //test4
          Begin = new Time(2016,9,18,15,40);
          End = new Time(2016,9,19,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,9,16,40);
          IEnd = new Time(2016,9,20,18,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);;
+         timeSpan = new TimeSpan2(IBegin,IEnd);;
          expResult = false;
          result = instance.isPartOf(timeSpan);
          assertEquals(expResult, result);
     }
 
     /**
-     * deze test is niet correct
+     * 
      * Test of unionWith method, of class TimeSpan.
      */
     //
@@ -247,40 +249,40 @@ public class TimeSpanTest {
         
          ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,18,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         ITime IBegin = new Time(2016,9,24,16,40);
         ITime IEnd = new Time(2016,9,24,18,40);
-        ITimeSpan timeSpan = new TimeSpan(IBegin,IEnd);;
+        TimeSpan2 timeSpan = new TimeSpan2(IBegin,IEnd);;
         ITimeSpan expResult = null;
         ITimeSpan result = instance.unionWith(timeSpan);
         assertEquals(expResult, result);
         
          Begin = new Time(2016,9,19,15,40);
          End = new Time(2016,9,19,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,16,16,40);
          IEnd = new Time(2016,9,16,18,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);;
+         timeSpan = new TimeSpan2(IBegin,IEnd);;
          expResult = null;
          result = instance.unionWith(timeSpan);
         assertEquals(expResult, result);
         
          Begin = new Time(2016,9,19,15,40);
          End = new Time(2016,9,19,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,17,16,40);
          IEnd = new Time(2016,9,20,17,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);;
+         timeSpan = new TimeSpan2(IBegin,IEnd);;
          expResult = new TimeSpan(Begin,End);
          result = instance.unionWith(timeSpan);
          assertEquals(expResult.getBeginTime().getMinutes(), result.getBeginTime().getMinutes());
         
            Begin = new Time(2016,9,9,15,40);
          End = new Time(2016,9,20,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,10,16,40);
          IEnd = new Time(2016,9,18,17,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);;
+         timeSpan = new TimeSpan2(IBegin,IEnd);;
          expResult = timeSpan;
          result = instance.unionWith(timeSpan);
          assertEquals(expResult.getBeginTime().getMinutes(), result.getBeginTime().getMinutes());
@@ -289,7 +291,7 @@ public class TimeSpanTest {
     }
 
     /**
-     * deze test is niet correct
+     * 
      * Test of intersectionWith method, of class TimeSpan.
      *///
     @Test
@@ -297,37 +299,48 @@ public class TimeSpanTest {
         System.out.println("intersectionWith");
         ITime Begin = new Time(2016,9,19,15,40);
         ITime End = new Time(2016,9,19,18,40);
-        TimeSpan instance = new TimeSpan(Begin,End);
+        TimeSpan2 instance = new TimeSpan2(Begin,End);
         ITime IBegin = new Time(2016,9,24,16,40);
         ITime IEnd = new Time(2016,9,25,18,40);
-        ITimeSpan timeSpan = new TimeSpan(IBegin,IEnd);
-        ITimeSpan expResult = new TimeSpan(Begin,IEnd);
+        TimeSpan2 timeSpan = new TimeSpan2(IBegin,IEnd);
+        TimeSpan2 expResult = new TimeSpan2(Begin,IEnd);
         ITimeSpan result = instance.intersectionWith(timeSpan);
-        assertEquals(expResult.getBeginTime(), result.getBeginTime());
-        assertEquals(expResult.getEndTime(),result.getEndTime());
+        if (expResult.getEndTime().compareTo(result.getEndTime())==0 && expResult.getBeginTime().compareTo(result.getBeginTime())==0) {
+        } 
+        else {
+            fail("IntersectionWith incorrect");
+        }
+
         
          Begin = new Time(2016,9,19,15,40);
          End = new Time(2016,9,19,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,17,16,40);
          IEnd = new Time(2016,9,25,18,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);
+         timeSpan = new TimeSpan2(IBegin,IEnd);
          expResult = timeSpan;
          result = instance.intersectionWith(timeSpan);
-         assertEquals(expResult.getBeginTime().getDay(), result.getBeginTime().getDay());
-         assertEquals(expResult.getEndTime().getDay(), result.getEndTime().getDay());
-         
+       
+          if (expResult.getEndTime().compareTo(result.getEndTime())==0 && expResult.getBeginTime().compareTo(result.getBeginTime())==0) {
+        } 
+        else {
+            fail("IntersectionWith incorrect");
+        }
+          
          Begin = new Time(2016,9,17,15,40);
          End = new Time(2016,9,26,18,40);
-         instance = new TimeSpan(Begin,End);
+         instance = new TimeSpan2(Begin,End);
          IBegin = new Time(2016,9,19,16,40);
          IEnd = new Time(2016,9,24,18,40);
-         timeSpan = new TimeSpan(IBegin,IEnd);
+         timeSpan = new TimeSpan2(IBegin,IEnd);
          expResult = instance;
          result = instance.intersectionWith(timeSpan);
-         assertEquals(expResult.getBeginTime().getDay(), result.getBeginTime().getDay());
-             assertEquals(expResult.getEndTime().getDay(), result.getEndTime().getDay());
+          if (expResult.getEndTime().compareTo(result.getEndTime())==0 && expResult.getBeginTime().compareTo(result.getBeginTime())==0) {
+        } 
+        else {
+            fail("IntersectionWith incorrect");
+        }
          
     }
-    
+
 }
