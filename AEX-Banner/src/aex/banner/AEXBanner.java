@@ -33,6 +33,10 @@ public class AEXBanner extends Application {
     private AnimationTimer animationTimer;
 
     
+    public static void main(String[] args){
+        launch(args);
+    }
+    
     @Override
     public void start(Stage primaryStage) {
 

@@ -5,7 +5,10 @@
  */
 package aex.banner;
 
+import java.rmi.NotBoundException;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**
@@ -21,14 +24,18 @@ public class KoersTimeTask extends TimerTask {
 
     @Override
     public void run() {
-      controller.Update();
-      Platform.runLater(new Runnable(){
-        @Override
-        public void run(){
-         controller.GetBanner().setKoersen(controller.GetBannerText());
-        }
-            
-        });
+      try {
+          controller.Update();
+          Platform.runLater(new Runnable(){
+              @Override
+              public void run(){
+                  controller.GetBanner().setKoersen(controller.GetBannerText());
+              }
+              
+          });
+      } catch (NotBoundException ex) {
+          Logger.getLogger(KoersTimeTask.class.getName()).log(Level.SEVERE, null, ex);
+      }
     
     }
 }
