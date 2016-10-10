@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author redxice
+ * @author Melvin
  */
 public class TimeSpan2Test {
     
