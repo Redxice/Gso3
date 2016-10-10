@@ -5,23 +5,35 @@
  */
 package aex.banner;
 
+import java.rmi.RemoteException;
+import java.util.Random;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author redxice
  */
 public class EffectenBeursTimeTask extends TimerTask{
-    private MockEffectenbeurs effectenbeurs;
-    
-    public EffectenBeursTimeTask(MockEffectenbeurs effectenbeurs){
+    private IEffectenbeurs effectenbeurs;
+    private Random RD;
+    public EffectenBeursTimeTask(IEffectenbeurs effectenbeurs){
         this.effectenbeurs =effectenbeurs ;
+        RD = new Random();
     }
     
  
     @Override
     public void run() {
-        this.effectenbeurs.UpdateKoers();
+        try {
+            for (IFonds fond : effectenbeurs.getKoersen()) {
+                fond.setKoers(RD.nextDouble() * 10);
+                System.out.println(fond.getKoers());
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(EffectenBeursTimeTask.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

@@ -11,7 +11,14 @@ package aex.banner;
  * @author redxice
  */
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.List;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class BannerController extends AEXBanner {
@@ -26,7 +33,6 @@ public class BannerController extends AEXBanner {
     public BannerController(AEXBanner banner) {
 
         this.banner = banner;
-        this.effectenbeurs = new MockEffectenbeurs();
         // Start polling timer: update banner every two seconds
         pollingTimer = new Timer();
         pollingTimer.schedule(new KoersTimeTask(this),0,2000);
@@ -39,12 +45,18 @@ public class BannerController extends AEXBanner {
     public String GetBannerText(){
         return BannerText;
     }
-    public void Update(){
+    public void Update() throws NotBoundException{
         BannerText="";
-
-        for (IFonds fond : effectenbeurs.getKoersen()) {
-       
-         BannerText +=fond.toString()+" ";
+        try {
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1",1099);
+            IEffectenbeurs effectenbeurs = (IEffectenbeurs)registry.lookup("AEX");
+            List<IFonds> fondsen = effectenbeurs.getKoersen();
+            for (IFonds fond : fondsen) {
+                BannerText +=fond.toString()+" ";
+            }
+        } catch (RemoteException ex) {
+            BannerText = "AEX SERVER UNREACHABLE, PLEASE CONTACT SYSTEM ADMIN AT 062456812";
+            Logger.getLogger(BannerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }

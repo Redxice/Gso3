@@ -22,8 +22,8 @@ Timer t = new Timer();
 
     public MockEffectenbeurs(){
          
-         IFonds shell = new Fond("shell",RD.nextDouble());
-         IFonds Unilever = new Fond("Unilever",RD.nextDouble());
+         IFonds shell = new Fonds("shell",RD.nextDouble());
+         IFonds Unilever = new Fonds("Unilever",RD.nextDouble());
          fonds.add(shell);
          fonds.add(Unilever);
          this.t.schedule(new EffectenBeursTimeTask(this),0,2000);
@@ -38,7 +38,7 @@ Timer t = new Timer();
    public void UpdateKoers(){
        
       for(IFonds fond :fonds){
-         fond.setKoers(RD.nextDouble());
+         fond.setKoers(RD.nextDouble()*10);
       }
    
 }

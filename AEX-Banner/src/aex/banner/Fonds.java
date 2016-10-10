@@ -5,6 +5,14 @@
  */
 package aex.banner;
 
+import java.io.Serializable;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
 import static java.lang.Math.round;
 
 
@@ -13,12 +21,12 @@ import static java.lang.Math.round;
  *
  * @author redxice
  */
-public class Fond implements IFonds {
+public class Fonds implements IFonds {
 
     private String naam;
     private double koers;
     
-    public Fond(String naam, double koers ){
+    public Fonds(String naam, double koers ){
         this.naam = naam;
         this.koers= koers;
     }
@@ -40,7 +48,7 @@ public class Fond implements IFonds {
 
     @Override
     public String toString() {
-        return  ""+naam + " :" + round(koers) +"";
+        return  ""+naam + " :" + koers +"";
     }
     
    

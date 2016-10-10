@@ -5,13 +5,16 @@
  */
 package aex.banner;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.List;
 
 /**
  *
  * @author redxice
  */
-public interface IEffectenbeurs {
+public interface IEffectenbeurs extends Remote{
     
-   public List<IFonds> getKoersen();
+   public List<IFonds> getKoersen() throws RemoteException;
+
 }

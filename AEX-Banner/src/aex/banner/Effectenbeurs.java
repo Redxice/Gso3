@@ -5,17 +5,36 @@
  */
 package aex.banner;
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Timer;
 
 /**
  *
  * @author redxice
  */
-public class Effectenbeurs implements IEffectenbeurs {
+public class Effectenbeurs extends UnicastRemoteObject implements IEffectenbeurs {
+
+    private List<IFonds> fondsen = new ArrayList<>();
+    Random RD = new Random();
+    
+
+    public Effectenbeurs() throws RemoteException {
+        IFonds shell = new Fonds("Shell",RD.nextDouble());
+         IFonds Unilever = new Fonds("Unilever",RD.nextDouble());
+         fondsen.add(shell);
+         fondsen.add(Unilever);
+    }
 
     @Override
-    public List<IFonds> getKoersen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<IFonds> getKoersen() throws RemoteException {
+        return fondsen;
+
     }
-    
+
 }

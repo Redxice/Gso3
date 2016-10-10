@@ -5,11 +5,13 @@
  */
 package aex.banner;
 
+import java.io.Serializable;
+
 /**
  *
  * @author redxice
  */
-public interface IFonds {
+public interface IFonds extends Serializable{
     public String Getnaam();
     public double getKoers();
     public void setKoers(double koers);
