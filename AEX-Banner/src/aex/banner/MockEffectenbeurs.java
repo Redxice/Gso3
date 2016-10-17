@@ -26,7 +26,7 @@ Timer t = new Timer();
          IFonds Unilever = new Fonds("Unilever",RD.nextDouble());
          fonds.add(shell);
          fonds.add(Unilever);
-         this.t.schedule(new EffectenBeursTimeTask(this),0,2000);
+         //this.t.schedule(new EffectenBeursTimeTask(this),0,2000);
        
     }
     @Override

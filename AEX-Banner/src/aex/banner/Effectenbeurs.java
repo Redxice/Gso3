@@ -5,6 +5,7 @@
  */
 package aex.banner;
 
+import fontyspublisher.RemotePublisher;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -36,6 +37,7 @@ public class Effectenbeurs extends UnicastRemoteObject implements IEffectenbeurs
          fondsen.add(KLM);
          fondsen.add(Philips);
          fondsen.add(Heineken);
+
     }
 
     @Override

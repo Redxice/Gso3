@@ -6,6 +6,8 @@
 package aex.banner;
 
 import static java.lang.Math.round;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -38,7 +40,7 @@ public class AEXBanner extends Application {
     }
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws RemoteException, NotBoundException {
 
         controller = new BannerController(this);
 
@@ -68,7 +70,7 @@ public class AEXBanner extends Application {
                 if (lag >= NANO_TICKS) {
                     // calculate new location of text
                     // TODO
-                    
+                        //System.out.println("UPDATE ANIMATION");
                         text.relocate(textPosition,0);
 			prevUpdate = now;
                 }
