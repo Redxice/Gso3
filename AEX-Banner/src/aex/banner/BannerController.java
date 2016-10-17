@@ -55,7 +55,7 @@ public class BannerController extends AEXBanner {
                 BannerText +=fond.toString()+" ";
             }
         } catch (RemoteException ex) {
-            BannerText = "AEX SERVER UNREACHABLE, PLEASE CONTACT SYSTEM ADMIN AT 062456812";
+            BannerText = "AEX SERVER UNREACHABLE";
             Logger.getLogger(BannerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     

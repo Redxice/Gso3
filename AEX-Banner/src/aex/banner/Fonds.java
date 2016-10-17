@@ -48,7 +48,8 @@ public class Fonds implements IFonds {
 
     @Override
     public String toString() {
-        return  ""+naam + " :" + koers +"";
+        
+        return  naam + " :" + koers;
     }
     
    

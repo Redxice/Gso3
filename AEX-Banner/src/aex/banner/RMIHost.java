@@ -24,10 +24,8 @@ public class RMIHost {
             IEffectenbeurs effectenbeurs = new Effectenbeurs();
             
             Registry registry;
-
-            
-                registry = LocateRegistry.createRegistry(1099);
-                registry.rebind("AEX", effectenbeurs);
+            registry = LocateRegistry.createRegistry(1099);
+            registry.rebind("AEX", effectenbeurs);
             Timer t = new Timer();
             t.schedule(new EffectenBeursTimeTask(effectenbeurs),0,2000);
             

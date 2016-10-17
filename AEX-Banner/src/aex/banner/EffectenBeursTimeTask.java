@@ -28,7 +28,7 @@ public class EffectenBeursTimeTask extends TimerTask{
     public void run() {
         try {
             for (IFonds fond : effectenbeurs.getKoersen()) {
-                fond.setKoers(RD.nextDouble() * 10);
+                fond.setKoers(RD.nextDouble() * 100);
                 System.out.println(fond.getKoers());
             }
         } catch (RemoteException ex) {

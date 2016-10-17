@@ -25,10 +25,17 @@ public class Effectenbeurs extends UnicastRemoteObject implements IEffectenbeurs
     
 
     public Effectenbeurs() throws RemoteException {
-        IFonds shell = new Fonds("Shell",RD.nextDouble());
-         IFonds Unilever = new Fonds("Unilever",RD.nextDouble());
-         fondsen.add(shell);
+        IFonds Shell = new Fonds("Shell",RD.nextDouble());
+        IFonds Unilever = new Fonds("Unilever",RD.nextDouble());
+        IFonds KLM = new Fonds("KLM",RD.nextDouble());
+        IFonds Philips = new Fonds("Philips",RD.nextDouble());
+        IFonds Heineken = new Fonds("Heineken",RD.nextDouble());
+
+         fondsen.add(Shell);
          fondsen.add(Unilever);
+         fondsen.add(KLM);
+         fondsen.add(Philips);
+         fondsen.add(Heineken);
     }
 
     @Override
