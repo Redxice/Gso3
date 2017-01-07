@@ -1,9 +1,13 @@
 package bank.bankieren;
 
 import fontys.util.*;
+import internetbankierenv2.IRemotePropertyListener;
+import internetbankierenv2.RemotePublisher;
 
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Bank implements IBank {
 
@@ -15,12 +19,19 @@ public class Bank implements IBank {
 	private Collection<IKlant> clients;
 	private int nieuwReknr;
 	private String name;
+        private RemotePublisher remotePublisher;
 
 	public Bank(String name) {
 		accounts = new HashMap<Integer,IRekeningTbvBank>();
 		clients = new ArrayList<IKlant>();
 		nieuwReknr = 100000000;	
-		this.name = name;	
+		this.name = name;
+            try {
+                remotePublisher = new RemotePublisher();
+                System.out.println("gelukt voor melvin");
+            } catch (RemoteException ex) {
+                Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	public synchronized int openRekening(String name, String city) {
@@ -82,5 +93,15 @@ public class Bank implements IBank {
 	public String getName() {
 		return name;
 	}
+
+    @Override
+    public void subscribeRemoteListener(IRemotePropertyListener listener, String property) throws RemoteException {
+        remotePublisher.subscribeRemoteListener(listener, property);
+    }
+
+    @Override
+    public void unsubscribeRemoteListener(IRemotePropertyListener listener, String property) throws RemoteException {
+        remotePublisher.unsubscribeRemoteListener(listener, property);
+    }
 
 }
