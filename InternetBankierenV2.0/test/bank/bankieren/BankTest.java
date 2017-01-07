@@ -124,7 +124,7 @@ public class BankTest {
         instance.maakOver(100000000, 100000001, money);
         
         
-        expResult = true;
+        expResult = false;
         result = instance.maakOver(source, destination, money);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.

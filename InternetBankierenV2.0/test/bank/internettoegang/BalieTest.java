@@ -5,6 +5,8 @@
  */
 package bank.internettoegang;
 
+import bank.bankieren.Bank;
+import java.rmi.RemoteException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,17 +43,30 @@ public class BalieTest {
      * Test of openRekening method, of class Balie.
      */
     @Test
-    public void testOpenRekening() {
-        System.out.println("openRekening");
+    public void testOpenRekening() throws RemoteException {
+        Bank b = new Bank("Rabobank");
         String naam = "";
         String plaats = "";
         String wachtwoord = "";
-        Balie instance = null;
-        String expResult = "";
+        Balie instance = new Balie(b);
+        String expResult = null;
         String result = instance.openRekening(naam, plaats, wachtwoord);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        naam = "Henk";
+        result = instance.openRekening(naam, plaats, wachtwoord);
+        assertEquals(expResult,result);
+        plaats = "Henk";
+        result = instance.openRekening(naam, plaats, wachtwoord);
+        assertEquals(expResult,result);
+        wachtwoord = "123456789";
+        result = instance.openRekening(naam, plaats, wachtwoord);
+        assertEquals(expResult,result);
+        wachtwoord = "12345678";
+        result = instance.openRekening(naam, plaats, wachtwoord);           
+        System.out.println(result);
+        
+        
     }
 
     /**
@@ -59,15 +74,19 @@ public class BalieTest {
      */
     @Test
     public void testLogIn() throws Exception {
+        Bank b = new Bank("Rabobank");
+        Balie instance = new Balie(b);
+        String id = instance.openRekening("Henk", "Breda", "1234567");
         System.out.println("logIn");
-        String accountnaam = "";
-        String wachtwoord = "";
-        Balie instance = null;
+        
         IBankiersessie expResult = null;
-        IBankiersessie result = instance.logIn(accountnaam, wachtwoord);
+        IBankiersessie result = instance.logIn("onzin", "1234567");
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        result = instance.logIn(id,"123456");
+        assertEquals(expResult,result);
+        result = instance.logIn(id, "1234567");
+        assertNotNull(result);
+
     }
     
 }
