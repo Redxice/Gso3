@@ -22,12 +22,16 @@ public class Bankiersessie extends UnicastRemoteObject implements
 	private int reknr;
 	private IBank bank;
         private RemotePublisher remotePublisher;
+        private String[] arrayofzo;
 
 	public Bankiersessie(int reknr, IBank bank) throws RemoteException {
 		laatsteAanroep = System.currentTimeMillis();
 		this.reknr = reknr;
 		this.bank = bank;
-		remotePublisher = new RemotePublisher();
+                bank.subscribeRemoteListener(this, null);
+                arrayofzo = new String[2];
+                arrayofzo[0] = bank.getRekening(reknr).getSaldo().toString();
+		remotePublisher = new RemotePublisher(arrayofzo);
 	}
 
 	public boolean isGeldig() {
@@ -84,7 +88,7 @@ public class Bankiersessie extends UnicastRemoteObject implements
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-       remotePublisher.inform(null, evt.getOldValue(), evt.getNewValue());
+       remotePublisher.inform(arrayofzo[0], null, evt.getNewValue());
     }
 
  
