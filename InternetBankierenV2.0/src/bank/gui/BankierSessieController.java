@@ -12,6 +12,7 @@ import bank.internettoegang.IBankiersessie;
 import fontys.util.InvalidSessionException;
 import fontys.util.NumberDoesntExistException;
 import internetbankierenv2.IRemotePropertyListener;
+import internetbankierenv2.RemotePublisher;
 import java.beans.PropertyChangeEvent;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -66,13 +67,14 @@ public class BankierSessieController extends UnicastRemoteObject implements Init
         this.application = application;
         IRekening rekening = null;
         try {
-            sessie.subscribeRemoteListener(this, null);
+            
             rekening = sessie.getRekening();
             tfAccountNr.setText(rekening.getNr() + "");
             tfBalance.setText(rekening.getSaldo() + "");
             String eigenaar = rekening.getEigenaar().getNaam() + " te "
                     + rekening.getEigenaar().getPlaats();
             tfNameCity.setText(eigenaar);
+            sessie.subscribeRemoteListener(this,"sessie");
         } catch (InvalidSessionException ex) {
             taMessage.setText("bankiersessie is verlopen");
             Logger.getLogger(BankierSessieController.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,5 +144,6 @@ public class BankierSessieController extends UnicastRemoteObject implements Init
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
         chanceValue((String) evt.getNewValue());
+        System.out.println("Hello is it me you're looking for?");
     }
 }

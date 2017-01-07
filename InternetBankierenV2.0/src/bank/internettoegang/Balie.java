@@ -4,6 +4,7 @@ import java.rmi.*;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import bank.bankieren.*;
+import internetbankierenv2.RemotePublisher;
 
 public class Balie extends UnicastRemoteObject implements IBalie {
 

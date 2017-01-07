@@ -5,14 +5,7 @@
  */
 package aex.banner;
 
-import java.io.Serializable;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
+
 import static java.lang.Math.round;
 
 
