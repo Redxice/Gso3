@@ -74,7 +74,7 @@ public class BankierSessieController extends UnicastRemoteObject implements Init
             String eigenaar = rekening.getEigenaar().getNaam() + " te "
                     + rekening.getEigenaar().getPlaats();
             tfNameCity.setText(eigenaar);
-            sessie.subscribeRemoteListener(this,"sessie");
+            sessie.subscribeRemoteListener(this,"test");
         } catch (InvalidSessionException ex) {
             taMessage.setText("bankiersessie is verlopen");
             Logger.getLogger(BankierSessieController.class.getName()).log(Level.SEVERE, null, ex);

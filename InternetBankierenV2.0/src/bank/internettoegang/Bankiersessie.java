@@ -30,7 +30,7 @@ public class Bankiersessie extends UnicastRemoteObject implements
 		this.bank = bank;
                 bank.subscribeRemoteListener(this, String.valueOf(reknr));
 		remotePublisher = new RemotePublisher();
-                remotePublisher.registerProperty("sessie");
+                remotePublisher.registerProperty("test");
                 
 	}
 
@@ -88,7 +88,7 @@ public class Bankiersessie extends UnicastRemoteObject implements
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-       remotePublisher.inform("sessie", null, evt.getNewValue());
+       remotePublisher.inform("test", null, evt.getNewValue());
     }
 
  }
