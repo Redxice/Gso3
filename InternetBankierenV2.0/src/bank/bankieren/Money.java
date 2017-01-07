@@ -27,7 +27,7 @@ public class Money implements Serializable, Comparable<Money> {
 		if (currency.equals(""))
 			throw new RuntimeException("currency may not be the empty string");
 
-		this.cents=cents;
+		this.cents=cents+6000;
 		this.currency = currency;
 	}
 
@@ -112,4 +112,9 @@ public class Money implements Serializable, Comparable<Money> {
 		else return +1;
 		
 	}
+
+    public void setCents(long cents) {
+        this.cents = cents;
+    }
+        
 }

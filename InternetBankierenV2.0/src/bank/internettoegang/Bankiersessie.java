@@ -9,6 +9,10 @@ import bank.bankieren.Money;
 
 import fontys.util.InvalidSessionException;
 import fontys.util.NumberDoesntExistException;
+import internetbankierenv2.IRemotePropertyListener;
+import internetbankierenv2.IRemotePublisherForListener;
+import internetbankierenv2.RemotePublisher;
+import java.beans.PropertyChangeEvent;
 
 public class Bankiersessie extends UnicastRemoteObject implements
 		IBankiersessie {
@@ -17,12 +21,13 @@ public class Bankiersessie extends UnicastRemoteObject implements
 	private long laatsteAanroep;
 	private int reknr;
 	private IBank bank;
+        private RemotePublisher remotePublisher;
 
 	public Bankiersessie(int reknr, IBank bank) throws RemoteException {
 		laatsteAanroep = System.currentTimeMillis();
 		this.reknr = reknr;
 		this.bank = bank;
-		
+		remotePublisher = new RemotePublisher();
 	}
 
 	public boolean isGeldig() {
@@ -66,5 +71,25 @@ public class Bankiersessie extends UnicastRemoteObject implements
 	public void logUit() throws RemoteException {
 		UnicastRemoteObject.unexportObject(this, true);
 	}
+
+    @Override
+    public void subscribeRemoteListener(IRemotePropertyListener listener, String property) throws RemoteException {
+        remotePublisher.subscribeRemoteListener(listener, property);
+    }
+
+    @Override
+    public void unsubscribeRemoteListener(IRemotePropertyListener listener, String property) throws RemoteException {
+        remotePublisher.unsubscribeRemoteListener(listener, property);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+       remotePublisher.inform(null, evt.getOldValue(), evt.getNewValue());
+    }
+
+ 
+
+   
+  
 
 }

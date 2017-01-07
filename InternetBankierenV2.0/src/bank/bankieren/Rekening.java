@@ -1,6 +1,9 @@
 package bank.bankieren;
 
-class Rekening implements IRekeningTbvBank {
+import bank.gui.BankierSessieController;
+import java.rmi.RemoteException;
+
+class Rekening implements IRekeningTbvBank{
 
     private static final long serialVersionUID = 7221569686169173632L;
     private static final int KREDIETLIMIET = -10000;
@@ -58,7 +61,8 @@ class Rekening implements IRekeningTbvBank {
     }
 
     public Money getSaldo() {
-        return saldo;
+        
+        return saldo;        
     }
 
     public boolean muteer(Money bedrag) {
@@ -77,4 +81,5 @@ class Rekening implements IRekeningTbvBank {
     public int getKredietLimietInCenten() {
         return KREDIETLIMIET;
     }
+
 }

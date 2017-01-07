@@ -6,8 +6,10 @@ import bank.bankieren.IRekening;
 import bank.bankieren.Money;
 import fontys.util.InvalidSessionException;
 import fontys.util.NumberDoesntExistException;
+import internetbankierenv2.IRemotePropertyListener;
+import internetbankierenv2.IRemotePublisherForListener;
 
-public interface IBankiersessie extends Remote {
+public interface IBankiersessie extends Remote,IRemotePublisherForListener,IRemotePropertyListener {
 	
 	long GELDIGHEIDSDUUR = 600000; 
 	/**
