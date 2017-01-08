@@ -95,7 +95,7 @@ public class Bank extends UnicastRemoteObject implements IBank
     }
 
     @Override
-    public synchronized IRekeningTbvBank getRekening(int nr) throws RemoteException
+    public  IRekeningTbvBank getRekening(int nr) throws RemoteException
     {
         System.out.println("Get rekening bank "+this.accounts.get(nr));
         return this.accounts.get(nr);
