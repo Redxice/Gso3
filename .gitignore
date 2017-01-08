@@ -36,3 +36,6 @@ InternetBankierenV2.0/nbproject/private/private.properties
 InternetBankierenV2.0/nbproject/private/private.xml
 InternetBankierenV2.0/ING.props
 InternetBankierenV2.0/RaboBank.props
+InternetBankierenV2.0/ING.props
+InternetBankierenV2.0/ING.props
+*.props

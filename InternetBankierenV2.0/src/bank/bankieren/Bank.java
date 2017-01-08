@@ -5,11 +5,12 @@ import internetbankierenv2.IRemotePropertyListener;
 import internetbankierenv2.RemotePublisher;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Bank implements IBank
+public class Bank extends UnicastRemoteObject implements IBank
 {
 
     /**
@@ -22,7 +23,7 @@ public class Bank implements IBank
     private String name;
     private RemotePublisher remotePublisher;
 
-    public Bank(String name)
+    public Bank(String name)throws RemoteException
     {
         accounts = new HashMap<Integer, IRekeningTbvBank>();
         clients = new ArrayList<IKlant>();
@@ -146,6 +147,12 @@ public class Bank implements IBank
     public void unsubscribeRemoteListener(IRemotePropertyListener listener, String property) throws RemoteException
     {
         remotePublisher.unsubscribeRemoteListener(listener, property);
+    }
+
+    @Override
+    public void InformBank(String RekeningNr,int value) throws RemoteException
+    {
+       remotePublisher.inform(RekeningNr, null, value);
     }
 
 }

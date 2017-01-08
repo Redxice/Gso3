@@ -2,6 +2,7 @@ package bank.bankieren;
 
 import fontys.util.*;
 import internetbankierenv2.IRemotePublisherForListener;
+import java.rmi.RemoteException;
 
 /**
  * @author 871059
@@ -40,15 +41,23 @@ public interface IBank extends IRemotePublisherForListener{
      */
     boolean maakOver(int bron, int bestemming, Money bedrag)
             throws NumberDoesntExistException;
-
+    /**
+     * informt iedereen die subscribed is op het rekeningnr van dat de waarde is verandert.
+     * @param RekeningNr
+     * @param value
+     * @throws RemoteException 
+     */
+    void InformBank(String RekeningNr,int value)throws RemoteException;
     /**
      * @param nr
      * @return de bankrekening met nummer nr mits bij deze bank bekend, anders null
+     * @throws java.rmi.RemoteException
      */
-    IRekening getRekening(int nr);
+    IRekening getRekening(int nr)throws RemoteException;
 
     /**
      * @return de naam van deze bank
+     * @throws java.rmi.RemoteException
      */
-    String getName();
+    String getName()throws RemoteException;
 }

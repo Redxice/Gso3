@@ -144,6 +144,5 @@ public class BankierSessieController extends UnicastRemoteObject implements Init
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
         chanceValue((String) evt.getNewValue());
-        System.out.println("Hello is it me you're looking for?");
     }
 }
