@@ -1,10 +1,15 @@
 package bank.bankieren;
 
+import centrale.IBankCentrale;
 import fontys.util.*;
 import internetbankierenv2.IRemotePropertyListener;
 import internetbankierenv2.RemotePublisher;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import java.util.logging.Level;
@@ -23,7 +28,7 @@ public class Bank extends UnicastRemoteObject implements IBank
     private String name;
     private RemotePublisher remotePublisher;
 
-    public Bank(String name)throws RemoteException
+    public Bank(String name) throws RemoteException
     {
         accounts = new HashMap<Integer, IRekeningTbvBank>();
         clients = new ArrayList<IKlant>();
@@ -38,7 +43,8 @@ public class Bank extends UnicastRemoteObject implements IBank
         }
     }
 
-    public synchronized int openRekening(String name, String city)
+    @Override
+    public synchronized int openRekening(String name, String city) throws RemoteException
     {
         if (name.equals("") || city.equals(""))
         {
@@ -46,17 +52,32 @@ public class Bank extends UnicastRemoteObject implements IBank
         }
 
         IKlant klant = getKlant(name, city);
+        Registry register = LocateRegistry.getRegistry("127.0.0.1", 666);
+        IBankCentrale centrale = null;
+        try
+        {
+            centrale = (IBankCentrale) register.lookup("central");
+            nieuwReknr = centrale.GetRekeningNr();
+        } catch (NotBoundException ex)
+        {
+            Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AccessException ex)
+        {
+            Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("nieuwReknr " + nieuwReknr);
         IRekeningTbvBank account = new Rekening(nieuwReknr, klant, Money.EURO);
         accounts.put(nieuwReknr, account);
         try
         {
             remotePublisher.registerProperty(String.valueOf(nieuwReknr));
+           System.out.println("Registerd property "+String.valueOf(nieuwReknr));
         } catch (RemoteException ex)
         {
             Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
         }
-        nieuwReknr++;
-        return nieuwReknr - 1;
+        System.out.println("accounts " + accounts);
+        return nieuwReknr;
     }
 
     private IKlant getKlant(String name, String city)
@@ -73,62 +94,31 @@ public class Bank extends UnicastRemoteObject implements IBank
         return klant;
     }
 
-    public IRekening getRekening(int nr)
+    @Override
+    public synchronized IRekeningTbvBank getRekening(int nr) throws RemoteException
     {
-        return accounts.get(nr);
+        System.out.println("Get rekening bank "+this.accounts.get(nr));
+        return this.accounts.get(nr);
     }
 
-    public boolean maakOver(int source, int destination, Money money)
+    @Override
+    public synchronized boolean maakOver(int source, int destination, Money money)
             throws NumberDoesntExistException
     {
-        if (source == destination)
-        {
-            throw new RuntimeException(
-                    "cannot transfer money to your own account");
-        }
-        if (!money.isPositive())
-        {
-            throw new RuntimeException("money must be positive");
-        }
 
-        IRekeningTbvBank source_account = (IRekeningTbvBank) getRekening(source);
-        if (source_account == null)
+        try
         {
-            throw new NumberDoesntExistException("account " + source
-                    + " unknown at " + name);
+            Registry register = LocateRegistry.getRegistry("127.0.0.1", 666);
+            IBankCentrale centrale = (IBankCentrale) register.lookup("central");
+            return centrale.MaakOver(source, destination, money);
+        } catch (RemoteException ex)
+        {
+            Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex)
+        {
+            Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        Money negative = Money.difference(new Money(0, money.getCurrency()),
-                money);
-        boolean success = source_account.muteer(negative);
-        if (!success)
-        {
-            return false;
-        }
-
-        IRekeningTbvBank dest_account = (IRekeningTbvBank) getRekening(destination);
-        if (dest_account == null)
-        {
-            throw new NumberDoesntExistException("account " + destination
-                    + " unknown at " + name);
-        }
-        success = dest_account.muteer(money);
-
-        if (!success) // rollback
-        {
-            source_account.muteer(money);
-        } else
-        {
-            try
-            {
-                remotePublisher.inform(String.valueOf(destination), null, dest_account.getSaldo().getValue());
-                remotePublisher.inform(String.valueOf(source), null, source_account.getSaldo().getValue());
-            } catch (RemoteException ex)
-            {
-                Logger.getLogger(Bank.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return success;
+        return false;
     }
 
     @Override
@@ -139,7 +129,7 @@ public class Bank extends UnicastRemoteObject implements IBank
 
     @Override
     public void subscribeRemoteListener(IRemotePropertyListener listener, String property) throws RemoteException
-    {
+    {   System.out.println("Een subscriber"+listener+" "+property);
         remotePublisher.subscribeRemoteListener(listener, property);
     }
 
@@ -150,9 +140,9 @@ public class Bank extends UnicastRemoteObject implements IBank
     }
 
     @Override
-    public void InformBank(String RekeningNr,int value) throws RemoteException
+    public void InformBank(String RekeningNr, String value) throws RemoteException
     {
-       remotePublisher.inform(RekeningNr, null, value);
+        remotePublisher.inform(RekeningNr, null, value);
     }
 
 }

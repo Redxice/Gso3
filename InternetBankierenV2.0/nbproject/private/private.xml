@@ -11,12 +11,14 @@
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/gui/BankSelectController.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/internetbankierenv2/IPropertyListener.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/bankieren/IBank.java</file>
+            <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/centrale/BankCentrale.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/internettoegang/Balie.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/internetbankierenv2/IRemotePublisherForDomain.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/bankieren/Money.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/gui/OpenRekeningController.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/bankieren/Bank.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/fontys/util/NumberDoesntExistException.java</file>
+            <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/SNS.props</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/internetbankierenv2/IRemotePropertyListener.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/internettoegang/ILoginAccount.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/gui/BankierSessieController.java</file>
@@ -26,10 +28,13 @@
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/internetbankierenv2/Publisher.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/server/BalieController.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/internettoegang/LoginAccount.java</file>
+            <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/centrale/CentraleBankSetUP.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/bankieren/IRekeningTbvBank.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/bankieren/IRekening.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/gui/BankierClient.java</file>
+            <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/ASN.props</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/fontys/util/InvalidSessionException.java</file>
+            <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/centrale/IBankCentrale.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/bank/bankieren/Klant.java</file>
             <file>file:/C:/Users/redxice/Documents/Gso3/InternetBankierenV2.0/src/internetbankierenv2/RemotePublisher.java</file>
         </group>

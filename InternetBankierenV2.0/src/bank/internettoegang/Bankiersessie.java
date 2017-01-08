@@ -27,7 +27,9 @@ public class Bankiersessie extends UnicastRemoteObject implements
             
 		laatsteAanroep = System.currentTimeMillis();
 		this.reknr = reknr;
+                System.out.println("Mein nr "+this.reknr);
 		this.bank = bank;
+                System.out.println("Mein bank "+this.bank);
                 bank.subscribeRemoteListener(this, String.valueOf(reknr));
 		remotePublisher = new RemotePublisher();
                 remotePublisher.registerProperty("test");
@@ -42,7 +44,7 @@ public class Bankiersessie extends UnicastRemoteObject implements
 	public boolean maakOver(int bestemming, Money bedrag)
 			throws NumberDoesntExistException, InvalidSessionException,
 			RemoteException {
-		
+		System.out.println(reknr+"bestemming "+bestemming);
 		updateLaatsteAanroep();
 		
 		if (reknr == bestemming)

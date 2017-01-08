@@ -67,7 +67,7 @@ public class BankierClient extends Application {
             props.load(in);
             String rmiBalie = props.getProperty("balie");
             in.close();
-
+            System.out.println(rmiBalie);
             IBalie balie = (IBalie) Naming.lookup("rmi://" + rmiBalie);
                         return balie;
 

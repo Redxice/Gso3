@@ -103,23 +103,31 @@ public class BankierSessieController extends UnicastRemoteObject implements Init
 
     @FXML
     private void transfer(ActionEvent event) {
-        try {
+        
             int from = Integer.parseInt(tfAccountNr.getText());
             int to = Integer.parseInt(tfToAccountNr.getText());
             if (from == to) {
                 taMessage.setText("can't transfer money to your own account");
             }
             long centen = (long) (Double.parseDouble(tfAmount.getText()) * 100);
-            sessie.maakOver(to, new Money(centen, Money.EURO));
+            
+                try
+                {
+                    sessie.maakOver(to, new Money(centen, Money.EURO));
+                } catch (NumberDoesntExistException ex)
+                {
+                    Logger.getLogger(BankierSessieController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvalidSessionException ex)
+                {
+                    Logger.getLogger(BankierSessieController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RemoteException ex)
+                {
+                    Logger.getLogger(BankierSessieController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             System.out.println("Overmaken gelukt");
-        } catch (RemoteException e1) {
-            e1.printStackTrace();
-            taMessage.setText("verbinding verbroken");
-        } catch (NumberDoesntExistException | InvalidSessionException e1) {
-            e1.printStackTrace();
-            taMessage.setText(e1.getMessage());
-        }
+       
     }
+    
     
     
     public void chanceValue(String saldo)

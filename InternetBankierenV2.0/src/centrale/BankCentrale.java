@@ -5,16 +5,23 @@
  */
 package centrale;
 
-import bank.bankieren.Bank;
-import bank.bankieren.IBank;
-import bank.bankieren.IRekeningTbvBank;
+
+import bank.bankieren.*;
 import bank.bankieren.Money;
 import fontys.util.NumberDoesntExistException;
+import java.net.MalformedURLException;
+import java.rmi.AccessException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.rmi.registry.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -24,16 +31,41 @@ public class BankCentrale extends UnicastRemoteObject implements IBankCentrale
 {
 
     private ArrayList<IBank> banks = new ArrayList<>();
-
+    private Map<Integer, IRekeningTbvBank> accounts = new HashMap<>();
+    private int nieuwReknr;
     public BankCentrale() throws RemoteException
     {
-
+           nieuwReknr = 100000000;
+           
+            //Bind the remote object stub in the registry
+            Registry registry = LocateRegistry.createRegistry(666);
+        
+        try
+        {
+            registry.bind("central", (IBankCentrale)this);
+        } catch (AlreadyBoundException ex)
+        {
+            Logger.getLogger(BankCentrale.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AccessException ex)
+        {
+            Logger.getLogger(BankCentrale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
     }
 
     @Override
-    public void addBank(IBank bank) throws RemoteException
-    {
+    public boolean addBank(IBank bank) throws RemoteException
+    {   for (IBank b: banks)
+        {
+            if (b.getName().equals(bank.getName()))
+            {
+                System.out.println("Return false");
+                return false;
+            }
+        }
+        System.out.println("Bank added "+bank);
         banks.add(bank);
+        return true;
     }
 
     @Override
@@ -80,28 +112,50 @@ public class BankCentrale extends UnicastRemoteObject implements IBankCentrale
                 source_account.muteer(money);
             } else
             {
-               source_Bank.InformBank(String.valueOf(source),source_account.getSaldo());
-               dest_account.InformBank(String.valueOf(destination),dest_account.getSaldo());
+               source_Bank.InformBank(String.valueOf(source),source_account.getSaldo().getValue());
+               dest_Bank.InformBank(String.valueOf(destination),dest_account.getSaldo().getValue());
             }
             return success;
         }
     }
 
     private IBank getBank(int nr)
-    {
+    { System.out.println("In get bank");
         for (IBank bank : banks)
         {
+            System.out.println("Ik zit hier vast");
             try
-            {
-                if (bank.getRekening(nr).getNr() == nr)
-                {
-                     return bank;
+            {   
+                if (nr == bank.getRekening(nr).getNr())
+                {  
+                    return bank;  
                 }
             } catch (RemoteException ex)
             {
                 Logger.getLogger(BankCentrale.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println("Niks gevonden in de for loop");
       return null;
     }
+
+    @Override
+    public int NrOfBanks() throws RemoteException
+    {
+        return this.banks.size();
+    }
+    @Override
+     public synchronized int GetRekeningNr()
+    {
+        nieuwReknr++;
+        return nieuwReknr-1;
+    }
+
+    @Override
+    public void addAccount(int nr,IRekeningTbvBank rekening) throws RemoteException
+    {
+       this.accounts.put(nr, rekening);
+    }
+
+   
 }

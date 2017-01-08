@@ -28,6 +28,12 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import centrale.*;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  *
@@ -61,23 +67,51 @@ public class BalieServer extends Application {
             FileOutputStream out = null;
             try {
                 this.nameBank = nameBank;
-                String address = java.net.InetAddress.getLocalHost().getHostAddress();
-                int port = 1099;
+                String address = "127.0.0.1";
+                int port = 0;
                 Properties props = new Properties();
-                String rmiBalie = address + ":" + port + "/" + nameBank;
+                Bank bank = new Bank(nameBank);
+                Registry registry = (Registry)java.rmi.registry.LocateRegistry.getRegistry("127.0.0.1",666);
+                IBankCentrale centrale=null;
+                try
+                {
+                    centrale = (IBankCentrale)registry.lookup("central");
+                } catch (RemoteException ex)
+                {
+                    Logger.getLogger(BalieServer.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex)
+                {
+                    Logger.getLogger(BalieServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (centrale.addBank(bank)){
+                    String rmiBalie="";
+                    if (bank.getName().equals("ING"))
+                    {
+                        port = 1099;
+                        rmiBalie = address + ":" + 1099 + "/" + nameBank;
+                    }
+                    else if(bank.getName().equals("ASN")){
+                        port = 545;
+                        rmiBalie = address + ":" + 545+ "/" + nameBank;
+                    }
+                
                 props.setProperty("balie", rmiBalie);
                 out = new FileOutputStream(nameBank + ".props");
                 props.store(out, null);
                 out.close();
-                java.rmi.registry.LocateRegistry.createRegistry(port);
-                IBalie balie = new Balie(new Bank(nameBank));
-                Naming.rebind(nameBank, balie);
                 
+                Registry registry2 = LocateRegistry.createRegistry(port);
+                IBalie balie = new Balie(bank);
+                registry2.bind(nameBank, balie);
                 return true;
+                }
 
             } catch (IOException ex) {
                 Logger.getLogger(BalieServer.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
+            } catch (AlreadyBoundException ex)
+        {
+            Logger.getLogger(BalieServer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
                 try {
                     out.close();
                 } catch (IOException ex) {

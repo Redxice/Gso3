@@ -2,13 +2,14 @@ package bank.bankieren;
 
 import fontys.util.*;
 import internetbankierenv2.IRemotePublisherForListener;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
  * @author 871059
  * 
  */
-public interface IBank extends IRemotePublisherForListener{
+public interface IBank extends IRemotePublisherForListener,Remote{
 
     /**
      * creatie van een nieuwe bankrekening met een identificerend rekeningnummer; 
@@ -21,8 +22,9 @@ public interface IBank extends IRemotePublisherForListener{
      *            de woonplaats van de eigenaar van de nieuwe bankrekening
      * @return -1 zodra naam of plaats een lege string en anders het nummer van de
      *         gecreeerde bankrekening
+     * @throws java.rmi.RemoteException
      */
-    int openRekening(String naam, String plaats);
+    int openRekening(String naam, String plaats)throws RemoteException;
 
     /**
      * er wordt bedrag overgemaakt van de bankrekening met nummer bron naar de
@@ -38,22 +40,23 @@ public interface IBank extends IRemotePublisherForListener{
      * @return <b>true</b> als de overmaking is gelukt, anders <b>false</b>
      * @throws NumberDoesntExistException
      *             als een van de twee bankrekeningnummers onbekend is
+     * @throws java.rmi.RemoteException
      */
     boolean maakOver(int bron, int bestemming, Money bedrag)
-            throws NumberDoesntExistException;
+            throws NumberDoesntExistException,RemoteException;
     /**
      * informt iedereen die subscribed is op het rekeningnr van dat de waarde is verandert.
      * @param RekeningNr
      * @param value
      * @throws RemoteException 
      */
-    void InformBank(String RekeningNr,int value)throws RemoteException;
+    void InformBank(String RekeningNr,String value)throws RemoteException;
     /**
      * @param nr
      * @return de bankrekening met nummer nr mits bij deze bank bekend, anders null
      * @throws java.rmi.RemoteException
      */
-    IRekening getRekening(int nr)throws RemoteException;
+    IRekeningTbvBank getRekening(int nr)throws RemoteException;
 
     /**
      * @return de naam van deze bank
