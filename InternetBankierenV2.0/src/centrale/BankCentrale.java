@@ -100,6 +100,7 @@ public class BankCentrale extends UnicastRemoteObject implements IBankCentrale
             }
 
             IRekeningTbvBank dest_account = (IRekeningTbvBank) dest_Bank.getRekening(destination);
+            System.out.println("dest_account"+dest_account);
             if (dest_account == null)
             {
                 throw new NumberDoesntExistException("account " + destination
@@ -112,6 +113,7 @@ public class BankCentrale extends UnicastRemoteObject implements IBankCentrale
                 source_account.muteer(money);
             } else
             {
+                System.out.println("Succes in maak over");
                source_Bank.InformBank(String.valueOf(source),source_account.getSaldo().getValue());
                dest_Bank.InformBank(String.valueOf(destination),dest_account.getSaldo().getValue());
             }
@@ -126,8 +128,9 @@ public class BankCentrale extends UnicastRemoteObject implements IBankCentrale
             System.out.println("Ik zit hier vast");
             try
             {   
-                if (nr == bank.getRekening(nr).getNr())
+                if (bank.getRekening(nr)!= null)
                 {  
+                    System.out.println("Ik ben er uit");
                     return bank;  
                 }
             } catch (RemoteException ex)
@@ -135,7 +138,7 @@ public class BankCentrale extends UnicastRemoteObject implements IBankCentrale
                 Logger.getLogger(BankCentrale.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Niks gevonden in de for loop");
+       System.out.println("Niks gevonden in de for loop");
       return null;
     }
 

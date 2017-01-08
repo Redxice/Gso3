@@ -52,7 +52,7 @@ public class Bankiersessie extends UnicastRemoteObject implements
 					"source and destination must be different");
 		if (!bedrag.isPositive())
 			throw new RuntimeException("amount must be positive");
-		
+		System.out.println("Ben onder in de methode");
 		return bank.maakOver(reknr, bestemming, bedrag);
 	}
 
